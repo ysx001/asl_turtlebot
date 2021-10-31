@@ -159,9 +159,13 @@ class Detector:
 
         ########## Code starts here ##########
         # TODO: Compute x, y, z.
-        x = 0.
-        y = 0.
+        x = float(u - self.cx) / float(self.fx)
+        y = float(v - self.cy) / float(self.fy)
         z = 1.
+        length = np.sqrt(x**2 + y**2 + 1)
+        x = x / length
+        y = y / length
+        z = z / length
         ########## Code ends here ##########
 
         return x, y, z
@@ -258,10 +262,10 @@ class Detector:
 
         ########## Code starts here ##########
         # TODO: Extract camera intrinsic parameters.
-        self.cx = 0.
-        self.cy = 0.
-        self.fx = 1.
-        self.fy = 1.
+        self.cx = msg.P[2]
+        self.cy = msg.P[6]
+        self.fx = msg.P[0]
+        self.fy = msg.P[5]
         ########## Code ends here ##########
 
     def laser_callback(self, msg):
