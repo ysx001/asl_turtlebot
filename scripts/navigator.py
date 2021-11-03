@@ -228,6 +228,7 @@ class Navigator:
         t = self.get_current_plan_time()
 
         if self.mode == Mode.PARK:
+            print("!!!!!!!!!!!!!!!!!!IN PARK MODE!!!!!!!!!!!!!!!!!")
             V, om = self.pose_controller.compute_control(self.x, self.y, self.theta, t)
         elif self.mode == Mode.TRACK:
             V, om = self.traj_controller.compute_control(self.x, self.y, self.theta, t)

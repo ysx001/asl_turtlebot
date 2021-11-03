@@ -1,5 +1,7 @@
 import numpy as np
 from utils import wrapToPi
+import rospy
+from std_msgs.msg import Float64
 
 # command zero velocities once we are this close to the goal
 RHO_THRES = 0.05
@@ -12,7 +14,9 @@ class PoseController:
         self.k1 = k1
         self.k2 = k2
         self.k3 = k3
-
+        self.alpha_publisher = rospy.Publisher('/controller/alpha', Float64, queue_size=10)
+        self.delta_publisher = rospy.Publisher('/controller/delta', Float64, queue_size=10)
+        self.rho_publisher = rospy.Publisher('/controller/rho', Float64, queue_size=10)
         self.V_max = V_max
         self.om_max = om_max
 
@@ -40,6 +44,11 @@ class PoseController:
         rho = np.sqrt(np.power(e_x, 2) + np.power(e_y,2))
         alpha = wrapToPi(np.arctan2(e_y, e_x) - th)
         delta = wrapToPi(np.arctan2(e_y, e_x) - self.th_g)
+        print(f"rho={rho}, alpha={alpha}, delta={delta}")
+        self.alpha_publisher.publish(alpha)
+        self.delta_publisher.publish(delta)
+        self.rho_publisher.publish(rho)
+
         def check_limit(rho, alpha, delta):
             return (rho < RHO_THRES) and (alpha < ALPHA_THRES) and (delta < DELTA_THRES)
 
