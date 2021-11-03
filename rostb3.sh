@@ -1,7 +1,7 @@
 # user variables section #######################################################
 # TURTLEBOT_NAME=<insert your turtlebot name here, e.g. "asteroid">
 # e.g. TURTLEBOT_NAME=arthur
-TURTLEBOT_NAME="" # TODO insert your value in quotes
+TURTLEBOT_NAME="asteroid" # TODO insert your value in quotes
 ################################################################################
 
 # user variables validation section ############################################
